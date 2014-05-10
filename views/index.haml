@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %title Cara ou Coroa
+    %meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    %meta(name='viewport' content='width=device-width, initial-scale=1')
+    %link(rel='stylesheet' href='/css/bootstrap.min.css')
+    %link(rel='stylesheet' href='/css/bootstrap-theme.min.css')
+  %body
+    .container-fluid
+      %h1 Cara ou Coroa
+      %form(action='/run' method='POST' role='form')
+        .form-group
+          %label.sr-only(for='count') Quantidade de jogadas
+          %input.form-control(type='text' id='count' name='count' placeholder='Quantidade de jogadas' autofocus)
+        %input.btn.btn-primary(type='submit' value='Executar')

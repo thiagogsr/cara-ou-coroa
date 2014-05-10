@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title Cara ou Coroa
+    %meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    %meta(name='viewport' content='width=device-width, initial-scale=1')
+    %link(rel='stylesheet' href='/css/bootstrap.min.css')
+    %link(rel='stylesheet' href='/css/bootstrap-theme.min.css')
+  %body
+    .container-fluid
+      %h1 Cara ou Coroa
+      %h4 Resultados
+      %p
+        %strong Quantidade de jogadas:
+        = @count
+      %p
+        %strong Sequência:
+        = @result.to_s.gsub(/\"/, '')
+      %p= "O lado <strong>cara</strong> da moeda apareceu #{@falseCount} vezes"
+      %p= "O lado <strong>coroa</strong> da moeda apareceu #{@trueCount} vezes"
+      %a(href='/' title='Voltar') Voltar

@@ -4,6 +4,7 @@ Bundler.setup
 require 'sinatra'
 require 'haml'
 
+configure { set :server, :puma }
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do

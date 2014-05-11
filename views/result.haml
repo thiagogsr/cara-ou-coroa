@@ -2,20 +2,77 @@
 %html
   %head
     %title Cara ou Coroa
-    %meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    %meta(name='viewport' content='width=device-width, initial-scale=1')
-    %link(rel='stylesheet' href='/css/bootstrap.min.css')
-    %link(rel='stylesheet' href='/css/bootstrap-theme.min.css')
+    %meta{"http-equiv" => 'X-UA-Compatible', content: 'IE=edge'}
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %link{rel: 'stylesheet', href: '/css/bootstrap.min.css'}
+    %link{rel: 'stylesheet', href: '/css/bootstrap-theme.min.css'}
   %body
     .container-fluid
-      %h1 Cara ou Coroa
-      %h4 Resultados
-      %p
-        %strong Quantidade de jogadas:
-        = @count
-      %p
-        %strong Sequência:
-        = @result.to_s.gsub(/\"/, '')
-      %p= "O lado <strong>cara</strong> da moeda apareceu #{@falseCount} vezes"
-      %p= "O lado <strong>coroa</strong> da moeda apareceu #{@trueCount} vezes"
-      %a(href='/' title='Voltar') Voltar
+      .row
+        .col-md-12
+          %h1 Cara ou Coroa
+          %h4 Resultados
+      .row
+        .col-md-6
+          - tArr = Array.new
+          - fArr = Array.new
+          - @count.each_with_index do |n, i|
+            %p
+              %strong Quantidade de jogadas:
+              = n
+            %p
+              %strong Sequência:
+              %input.form-control{type: 'text', readonly: true, value: @result[i].to_s.gsub(/\"/, '')}
+            - fArr << [n.to_i, @falseCount[i].to_i]
+            - tArr << [n.to_i, @trueCount[i].to_i]
+            - fProb = (@falseCount[i].to_f/n.to_f).round(2)
+            - tProb = (@trueCount[i].to_f/n.to_f).round(2)
+            %p= "O lado <strong>cara</strong> da moeda apareceu #{@falseCount[i]} vezes. Probabilidade: #{fProb} (#{(fProb*100).to_i}%)"
+            %p= "O lado <strong>coroa</strong> da moeda apareceu #{@trueCount[i]} vezes. Probabilidade: #{tProb} (#{(tProb*100).to_i}%)"
+            %hr/
+        .col-md-6
+          %h4 Gráfico
+          %strong Cara
+          %br/
+          #chart_cara_div
+          %br/
+          %br/
+          %strong Coroa
+          %br/
+          #chart_coroa_div
+      %a{href: '/', title:'Voltar'} Voltar
+      %br/
+      %br/
+
+    %script{src: "https://www.google.com/jsapi"}
+    :javascript
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawCaraChart);
+      google.setOnLoadCallback(drawCoroaChart);
+      function drawCaraChart() {
+        var options = {
+          title: 'Jogadas da moeda vs. quantidade de vezes que apareceu cara',
+          hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@count.each.max}},
+          vAxis: {title: 'Quantidade de vezes que apareceu cara', minValue: 0, maxValue: #{fArr.each.max}},
+          legend: 'none'
+        };
+
+        var data = google.visualization.arrayToDataTable(#{fArr.unshift(['Jogadas', 'Quantidade de vezes que apareceu cara']).to_s});
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_cara_div'));
+        chart.draw(data, options);
+      }
+
+      function drawCoroaChart() {
+        var options = {
+          title: 'Jogadas da moeda vs. quantidade de vezes que apareceu coroa',
+          hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@count.each.max}},
+          vAxis: {title: 'Quantidade de vezes que apareceu coroa', minValue: 0, maxValue: #{tArr.each.max}},
+          legend: 'none'
+        };
+
+        var data = google.visualization.arrayToDataTable(#{tArr.unshift(['Jogadas', 'Quantidade de vezes que apareceu coroa']).to_s});
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_coroa_div'));
+        chart.draw(data, options);
+      }

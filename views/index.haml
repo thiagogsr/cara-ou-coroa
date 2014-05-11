@@ -2,15 +2,20 @@
 %html
   %head
     %title Cara ou Coroa
-    %meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    %meta(name='viewport' content='width=device-width, initial-scale=1')
-    %link(rel='stylesheet' href='/css/bootstrap.min.css')
-    %link(rel='stylesheet' href='/css/bootstrap-theme.min.css')
+    %meta{"http-equiv" => 'X-UA-Compatible', content: 'IE=edge'}
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %link{rel: 'stylesheet', href: '/css/bootstrap.min.css'}
+    %link{rel: 'stylesheet', href: '/css/bootstrap-theme.min.css'}
   %body
     .container-fluid
       %h1 Cara ou Coroa
-      %form(action='/run' method='POST' role='form')
-        .form-group
-          %label.sr-only(for='count') Quantidade de jogadas
-          %input.form-control(type='text' id='count' name='count' placeholder='Quantidade de jogadas' autofocus)
-        %input.btn.btn-primary(type='submit' value='Executar')
+      %form{action: '/', method: 'POST', role: 'form'}
+        %p Informe a quantidade de jogadas por cada rodada
+        - 10.times do |i|
+          - c = i+1
+          .form-group
+            %label{for: "count_#{i}"}= "Rodada #{c}"
+            %input.form-control{type: 'number', id: "count_#{i}", name: 'count[]', placeholder: 'Quantidade de jogadas', value: "#{c*c*10}"}
+        %input.btn.btn-primary.form-control{type: 'submit', value: 'Executar'}
+        %br/
+        %br/

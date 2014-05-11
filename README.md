@@ -6,6 +6,7 @@ Programa de probabilidade para o jogo de cara ou coroa
 ### Requisitos:
 - Sinatra
 - HAML
+- Puma
 
 ### Instalação
 1. Clone o projeto através da URL `$ git clone https://github.com/thiagogsr/cara-ou-coroa.git`

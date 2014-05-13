@@ -23,10 +23,10 @@
             %p
               %strong Sequência:
               %input.form-control{type: 'text', readonly: true, value: @result[i].to_s.gsub(/\"/, '')}
-            - fArr << [n.to_i, @falseCount[i].to_i]
-            - tArr << [n.to_i, @trueCount[i].to_i]
             - fProb = (@falseCount[i].to_f/n.to_f).round(2)
             - tProb = (@trueCount[i].to_f/n.to_f).round(2)
+            - fArr << [n.to_i, fProb]
+            - tArr << [n.to_i, tProb]
             %p= "O lado <strong>cara</strong> da moeda apareceu #{@falseCount[i]} vezes. Probabilidade: #{fProb} (#{(fProb*100).to_i}%)"
             %p= "O lado <strong>coroa</strong> da moeda apareceu #{@trueCount[i]} vezes. Probabilidade: #{tProb} (#{(tProb*100).to_i}%)"
             %hr/
@@ -53,11 +53,11 @@
         var options = {
           title: 'Jogadas da moeda vs. quantidade de vezes que apareceu cara',
           hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@ammount.each.max}},
-          vAxis: {title: 'Quantidade de vezes que apareceu cara', minValue: 0, maxValue: #{fArr.each.max}},
+          vAxis: {title: 'Probabilidade', minValue: 0, maxValue: #{fArr.each.max}},
           legend: 'none'
         };
 
-        var data = google.visualization.arrayToDataTable(#{fArr.unshift(['Jogadas', 'Quantidade de vezes que apareceu cara']).to_s});
+        var data = google.visualization.arrayToDataTable(#{fArr.unshift(['Jogadas', 'Probabilidade']).to_s});
 
         var chart = new google.visualization.ScatterChart(document.getElementById('chart_cara_div'));
         chart.draw(data, options);
@@ -67,11 +67,11 @@
         var options = {
           title: 'Jogadas da moeda vs. quantidade de vezes que apareceu coroa',
           hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@ammount.each.max}},
-          vAxis: {title: 'Quantidade de vezes que apareceu coroa', minValue: 0, maxValue: #{tArr.each.max}},
+          vAxis: {title: 'Probabilidade', minValue: 0, maxValue: #{tArr.each.max}},
           legend: 'none'
         };
 
-        var data = google.visualization.arrayToDataTable(#{tArr.unshift(['Jogadas', 'Quantidade de vezes que apareceu coroa']).to_s});
+        var data = google.visualization.arrayToDataTable(#{tArr.unshift(['Jogadas', 'Probabilidade']).to_s});
 
         var chart = new google.visualization.ScatterChart(document.getElementById('chart_coroa_div'));
         chart.draw(data, options);

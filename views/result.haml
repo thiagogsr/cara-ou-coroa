@@ -16,7 +16,7 @@
         .col-md-6
           - tArr = Array.new
           - fArr = Array.new
-          - @count.each_with_index do |n, i|
+          - @ammount.each_with_index do |n, i|
             %p
               %strong Quantidade de jogadas:
               = n
@@ -52,7 +52,7 @@
       function drawCaraChart() {
         var options = {
           title: 'Jogadas da moeda vs. quantidade de vezes que apareceu cara',
-          hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@count.each.max}},
+          hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@ammount.each.max}},
           vAxis: {title: 'Quantidade de vezes que apareceu cara', minValue: 0, maxValue: #{fArr.each.max}},
           legend: 'none'
         };
@@ -66,7 +66,7 @@
       function drawCoroaChart() {
         var options = {
           title: 'Jogadas da moeda vs. quantidade de vezes que apareceu coroa',
-          hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@count.each.max}},
+          hAxis: {title: 'Jogadas', minValue: 0, maxValue: #{@ammount.each.max}},
           vAxis: {title: 'Quantidade de vezes que apareceu coroa', minValue: 0, maxValue: #{tArr.each.max}},
           legend: 'none'
         };
